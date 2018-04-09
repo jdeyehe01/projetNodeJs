@@ -1,6 +1,7 @@
 module.exports = {
 
 Administrator : require('./administrateur'),
-Ingredient : require('./ingredient')
+Ingredient : require('./ingredient'),
+Produit : require('./produit')
 
 };
