@@ -9,6 +9,19 @@ const produits = [];
 //Creation
 
 
+BorneController.getAllProduct = function() {
+  return produits;
+}
+
+
+BorneController.getAllIngredientByProduct = function(nameProduit) {
+    const produit = BorneController.getByName(nameProduit);
+    const ing = produit.ingredients;
+
+    return ing;
+}
+
+
 BorneController.getByName = function(name){
     return produits.find(function(e){
       return e.name === name;
