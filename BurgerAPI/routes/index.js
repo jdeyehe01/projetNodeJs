@@ -1,8 +1,9 @@
-const borneRouter = require('./borne');
-const RouterManager = function() { };
+const RouteManager = function() { };
 
-RouterManager.attach = function(app) {
-  app.use('/borne', borneRouter);
+RouteManager.attach = function(app) {
+  //app.use('/borne', require('./borne'));
+  app.use('/ingredient', require('./ingredient'));
+  app.use('/produit', require('./produit'));
 };
 
-module.exports = RouterManager;
+module.exports = RouteManager;

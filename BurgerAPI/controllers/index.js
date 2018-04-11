@@ -1,5 +1,5 @@
-const BorneController = require('./borne');
-
 module.exports = {
-  BorneController: BorneController
+//  BorneController: require('./borne'),
+  IngredientController : require('./ingredient'),
+  ProduitController : require('./produit')
 };

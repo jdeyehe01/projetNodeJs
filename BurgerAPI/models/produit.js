@@ -1,9 +1,36 @@
-const Produit = function(id,name,description, ingredients){
-  this.id = id;
-  this.name = name || "Inconnue";
-  this.description = description || "Inconnue"
-  this.ingredients = ingredients || [];
+module.exports = function(sequelize , DataTypes){
 
+  const Produit = sequelize.define('Produit' , {
+
+      id: {
+        type: DataTypes.BIGINT,
+        primaryKey: true,
+        autoIncrement : true
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+  },
+  {
+      paranoid: true,
+      underscored: true,
+      freezeTableName: true
+  });
+
+//  Produit.associate = _association;
+  return Produit;
 };
 
-module.exports = Produit;
+
+function _association(models){
+  models.Produit.belongsToMany(models.Ingredient, {
+    as: 'ingredients',
+    through: 'ProduitIngredient',
+    foreignKey: 'ingredient_id'
+  });
+};

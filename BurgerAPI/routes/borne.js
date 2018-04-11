@@ -11,18 +11,6 @@ borneRouter.use(bodyParser.json());
 
 // Les routes
 
-borneRouter.post('/ingredient', function(req, res) {
-  const name = req.body.name;
-  const type = req.body.type;
-  const quantite = parseInt(req.body.quantite);
-  if(name === undefined || type === undefined || quantite === undefined) {
-    res.status(400).end();
-    return;
-  }
-  const ingredient = BorneController.createIngredient(name, type , quantite);
-  res.status(201).json(ingredient);
-});
-
 
 borneRouter.post('/produit' , function(req,res){
 const nameP = req.body.name;
@@ -64,11 +52,6 @@ borneRouter.post('/:productName/addIngredient', function(req, res) {
 
   const i = BorneController.createIngredient(name, type , quantite);
 
-
-
-      return;
-
-  res.status(404).end();
 });
 
 // Fin
