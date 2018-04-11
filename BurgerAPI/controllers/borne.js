@@ -15,14 +15,14 @@ BorneController.getAllProduct = function() {
 
 
 BorneController.getAllIngredientByProduct = function(nameProduit) {
-    const produit = BorneController.getByName(nameProduit);
+    const produit = BorneController.getProductByName(nameProduit);
     const ing = produit.ingredients;
 
     return ing;
 }
 
 
-BorneController.getByName = function(name){
+BorneController.getProductByName = function(name){
     return produits.find(function(e){
       return e.name === name;
     });
