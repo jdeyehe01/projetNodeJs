@@ -15,7 +15,7 @@ IngredientController.getAll = function(){
   return Ingredient.findAll()
     .catch(function(err){
       console.error(err);
-    })
+    });
 };
 
 
