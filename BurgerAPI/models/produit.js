@@ -33,3 +33,4 @@ function _associate(models) {
     as: 'ingredients'
   });
 }
+
