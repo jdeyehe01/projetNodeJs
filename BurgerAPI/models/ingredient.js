@@ -23,15 +23,11 @@ module.exports = function(sequelize , DataTypes){
       underscored: true,
       freezeTableName: true
   });
-  //Ingredient.associate = _association;
+  Ingredient.associate = _association;
   return Ingredient;
 };
 
 
 function _association(models){
-  models.Ingredient.belongsToMany(models.Produit, {
-    as: 'produit',
-    through: 'IngredientProduit',
-    foreignKey: 'produit_id'
-  });
+  models.Ingredient.belongsTo(models.Produit);
 };
