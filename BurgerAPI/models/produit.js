@@ -19,6 +19,7 @@ const Produit = sequelize.define('Produit', {
     }
   },
   {
+
     paranoid: false,
     underscored: true,
     freezeTableName: true
@@ -38,4 +39,3 @@ function _associate(models) {
   });
 
 }
-
