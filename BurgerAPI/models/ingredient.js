@@ -19,19 +19,15 @@ module.exports = function(sequelize , DataTypes){
         type: DataTypes.BIGINT,
       }
   }, {
-      paranoid: true,
+      paranoid: false,
       underscored: true,
       freezeTableName: true
   });
-  //Ingredient.associate = _association;
+  Ingredient.associate = _association;
   return Ingredient;
 };
 
 
 function _association(models){
-  models.Ingredient.belongsToMany(models.Produit, {
-    as: 'produit',
-    through: 'IngredientProduit',
-    foreignKey: 'produit_id'
-  });
+  models.Ingredient.belongsTo(models.Produit);
 };
