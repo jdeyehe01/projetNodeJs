@@ -34,6 +34,7 @@ function _associate(models) {
     as: 'ingredients'
   });
 
+
   models.Produit.hasMany(models.CompoMenu, {
     as: 'ProduitCompoMenu'
   });
