@@ -57,5 +57,36 @@ ProduitController.allIngredientProduct = function(id){
      }
    })
 };
-//ProduitController.addIngredientInProduct = function(idProduct)
+
+
+ProduitController.addIngredientInProductById = function(idProduct,idIngredient){
+  return Ingredient.find({
+    where:{
+      id:idIngredient
+    }
+  })
+  .then((ingredient) => {
+    return ingredient.updateAttributes({
+      produit_id : idProduct
+    })
+  })
+
+}
+
+ProduitController.deleteIngredientById = function(idProduct,idIngredient){
+  return Ingredient.destroy({
+    where:{
+      id: idIngredient,
+      produit_id: idProduct
+    }
+  })
+  .then(() => {
+      console.log('Ingredient supprimé');
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+};
+
+
 module.exports = ProduitController;

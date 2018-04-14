@@ -19,7 +19,7 @@ module.exports = function(sequelize , DataTypes){
         type: DataTypes.BIGINT,
       }
   }, {
-      paranoid: true,
+      paranoid: false,
       underscored: true,
       freezeTableName: true
   });

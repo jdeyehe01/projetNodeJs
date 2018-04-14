@@ -19,7 +19,7 @@ const Produit = sequelize.define('Produit', {
     }
   },
   {
-    paranoid: true,
+    paranoid: false,
     underscored: true,
     freezeTableName: true
 });
@@ -32,4 +32,9 @@ function _associate(models) {
   models.Produit.hasMany(models.Ingredient, {
     as: 'ingredients'
   });
+
+  models.Produit.hasMany(models.CompoMenu, {
+    as: 'ProduitCompoMenu'
+  });
+
 }
