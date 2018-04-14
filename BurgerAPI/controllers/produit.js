@@ -90,3 +90,4 @@ ProduitController.deleteIngredientById = function(idProduct,idIngredient){
 
 
 module.exports = ProduitController;
+>>>>>>> Mis à jour

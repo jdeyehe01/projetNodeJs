@@ -24,7 +24,6 @@ module.exports = function(sequelize , DataTypes){
   return Boisson;
 };
 
-
 function _association(models){
   models.Boisson.hasMany(models.CompoMenu, {
     as: 'BoissonCompoMenu'

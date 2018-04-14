@@ -27,7 +27,6 @@ module.exports = function(sequelize , DataTypes){
   return Ingredient;
 };
 
-
 function _association(models){
   models.Ingredient.belongsTo(models.Produit);
 };
