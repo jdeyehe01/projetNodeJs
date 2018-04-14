@@ -94,3 +94,4 @@ produitRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req
 });
 
 module.exports = produitRouter;
+

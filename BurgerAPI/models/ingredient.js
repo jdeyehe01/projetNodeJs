@@ -31,3 +31,4 @@ module.exports = function(sequelize , DataTypes){
 function _association(models){
   models.Ingredient.belongsTo(models.Produit);
 };
+

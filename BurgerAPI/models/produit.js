@@ -38,3 +38,4 @@ function _associate(models) {
   });
 
 }
+

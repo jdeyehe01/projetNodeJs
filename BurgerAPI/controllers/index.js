@@ -4,3 +4,4 @@ module.exports = {
   ProduitController : require('./produit'),
   BoissonController : require('./boisson')
 };
+
