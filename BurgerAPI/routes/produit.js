@@ -46,8 +46,51 @@ produitRouter.get('/allIngredientProduct/:id' , function(req,res){
    console.error(err);
    res.status(500).end();
  })
+});
 
 
+produitRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
+
+  const idP = req.params.idProduct;
+  const idI = req.params.idIngredient;
+
+ ProduitController.addIngredientInProductById(idP,idI)
+ .then(() => {
+   const ingredients = ProduitController.allIngredientProduct(idP)
+   .then((ingredients) =>{
+     res.status(201).json(ingredients);
+   })
+   .catch((err) => {
+     console.error(err);
+     res.status(500).end();
+   })
+ })
+ .catch((err) =>{
+   console.error(err);
+ });
+});
+
+
+produitRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req,res){
+
+  const idProduit = req.params.idProduct;
+  const idIngredient = req.params.idIngredient;
+
+  if(idProduit === undefined || idIngredient === undefined){
+    res.status(500).end();
+    return;
+  }
+
+    ProduitController.deleteIngredientById(idProduit,idIngredient)
+    .then(() => {
+      const ing = ProduitController.allIngredientProduct(idProduit)
+      .then((ing) => {
+        res.status(201).json(ing);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+    })
 });
 
 module.exports = produitRouter;

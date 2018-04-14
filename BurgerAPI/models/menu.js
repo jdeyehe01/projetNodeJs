@@ -2,7 +2,7 @@
 
 module.exports = function(sequelize , DataTypes){
 
-const Produit = sequelize.define('Produit', {
+const Menu = sequelize.define('Menu', {
 
     id : {
       type: DataTypes.BIGINT,
@@ -23,19 +23,12 @@ const Produit = sequelize.define('Produit', {
     underscored: true,
     freezeTableName: true
 });
-  Produit.associate = _associate;
-  return Produit;
+  Menu.associate = _associate;
+  return Menu;
 };
 
-
 function _associate(models) {
-  models.Produit.hasMany(models.Ingredient, {
-    as: 'ingredients'
+  models.Menu.hasMany(models.CompoMenu, {
+    as: 'Menu_CompoMenu'
   });
-
-  models.Produit.hasMany(models.CompoMenu, {
-    as: 'ProduitCompoMenu'
-  });
-
 }
-
