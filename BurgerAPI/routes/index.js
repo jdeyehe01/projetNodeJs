@@ -1,3 +1,4 @@
+
 const RouteManager = function() { };
 
 RouteManager.attach = function(app) {
@@ -7,4 +8,3 @@ RouteManager.attach = function(app) {
 };
 
 module.exports = RouteManager;
-

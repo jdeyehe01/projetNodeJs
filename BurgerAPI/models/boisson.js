@@ -19,6 +19,7 @@ module.exports = function(sequelize , DataTypes){
       underscored: true,
       freezeTableName: true
   });
+
   Boisson.associate = _association;
   return Boisson;
 };
