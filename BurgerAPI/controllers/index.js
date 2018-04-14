@@ -1,5 +1,6 @@
 module.exports = {
 //  BorneController: require('./borne'),
   IngredientController : require('./ingredient'),
-  ProduitController : require('./produit')
+  ProduitController : require('./produit'),
+  BoissonController : require('./boisson')
 };

@@ -19,12 +19,13 @@ module.exports = function(sequelize , DataTypes){
       underscored: true,
       freezeTableName: true
   });
-  //Boisson.associate = _association;
+  Boisson.associate = _association;
   return Boisson;
 };
 
-/*
+
 function _association(models){
-  models.Boisson.belongsTo(models.Menu);
+  models.Boisson.hasMany(models.CompoMenu, {
+    as: 'BoissonCompoMenu'
+  });
 };
-*/
