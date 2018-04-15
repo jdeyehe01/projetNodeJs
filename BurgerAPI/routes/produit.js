@@ -48,6 +48,28 @@ produitRouter.get('/allIngredientProduct/:id' , function(req,res){
  })
 });
 
+produitRouter.get('/getProductById/:id' , function(req,res){
+  ProduitController.getProductById(req.params.id)
+  .then((produit) => {
+    res.status(201).json(produit);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  })
+});
+
+
+produitRouter.get('/getProductByName/:name' , function(req,res){
+  ProduitController.getProductById(req.params.name)
+  .then((produit) => {
+    res.status(201).json(produit);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  })
+});
 
 produitRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
 

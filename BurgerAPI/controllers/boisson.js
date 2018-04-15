@@ -23,16 +23,14 @@ return Boisson.find({
     where: {
       id: id
     }
-  }).then(function(boisson){
-    if(boisson){
-      console.log("la boisson a été trouvé");
-      return boisson;
-    }else{
-      console.log("la boisson n'a pas été trouvé ! ");
-    }
-  }).catch(function(err){
-    console.error(err);
   })
+  .then( (boisson) =>{
+    console.log("la boisson a été trouvé");
+    return boisson;
+  } )
+  .catch( (err) => {
+    console.error(err);
+  });
 }
 
 

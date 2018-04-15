@@ -26,8 +26,9 @@ ProduitController.getProductById = function(productId){
       id: productId
     }
   })
-  .then(() => {
+  .then((produit) => {
     console.log('Produit trouvé');
+    return produit;
   })
   .catch((error) => {
     console.error(err);
@@ -41,8 +42,9 @@ ProduitController.getProductByName = function(productName){
       name: productName
     }
   })
-  .then(() => {
+  .then((produit) => {
     console.log('Produit trouvé');
+    return produit;
   })
   .catch((error) => {
     console.error(err);
@@ -90,4 +92,3 @@ ProduitController.deleteIngredientById = function(idProduct,idIngredient){
 
 
 module.exports = ProduitController;
->>>>>>> Mis à jour
