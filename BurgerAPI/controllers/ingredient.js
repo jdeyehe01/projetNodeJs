@@ -3,11 +3,11 @@ const Ingredient = ModelIndex.Ingredient;
 
 const IngredientController = function() {};
 
-IngredientController.add = function(name,typeIngredient,quantite){
+IngredientController.add = function(name,ingredientType,quantity){
   return Ingredient.create({
     name: name,
-    typeIngredient: typeIngredient,
-    quantite: quantite
+    ingredientType: ingredientType,
+    quantity: quantity
   });
 };
 
@@ -34,7 +34,7 @@ return Ingredient.find({
   }).catch(function(err){
     console.error(err);
   })
-}
+};
 
 
 IngredientController.getByName = function(name){
@@ -52,5 +52,8 @@ IngredientController.getByName = function(name){
   }).catch(function(err){
     console.error(err);
   })
-}
+};
+
+
+
 module.exports = IngredientController;

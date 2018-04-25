@@ -13,10 +13,12 @@ module.exports = function(sequelize , DataTypes){
       },
       typeIngredient: {
         type: DataTypes.STRING,
+
         allowNull: false
       },
       quantite: {
         type: DataTypes.BIGINT,
+        allowNull: false
       }
   }, {
       paranoid: false,
@@ -31,4 +33,3 @@ module.exports = function(sequelize , DataTypes){
 function _association(models){
   models.Ingredient.belongsTo(models.Produit);
 };
-

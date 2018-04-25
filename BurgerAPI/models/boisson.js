@@ -30,4 +30,3 @@ function _association(models){
     as: 'BoissonCompoMenu'
   });
 };
-
