@@ -16,6 +16,10 @@ const Menu = sequelize.define('Menu', {
     description: {
       type: DataTypes.STRING,
         allowNull: false
+    },
+    price : {
+      type: DataTypes.FLOAT,
+      allowNull: false
     }
   },
   {
@@ -28,7 +32,9 @@ const Menu = sequelize.define('Menu', {
 };
 
 function _associate(models) {
-  models.Menu.hasMany(models.CompoMenu, {
-    as: 'Menu_CompoMenu'
+  models.Menu.belongsToMany(models.Product, {
+    as: 'products',
+    through: 'MenuProduct',
+    foreignKey: 'menu_id'
   });
 }

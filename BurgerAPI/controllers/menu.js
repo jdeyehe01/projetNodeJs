@@ -1,24 +1,22 @@
 const ModelIndex = require('../models');
 const controllers = require('../controllers');
 const Menu = ModelIndex.Menu;
-const b = ModelIndex.Boisson;
-const p = ModelIndex.Produit;
-const CompoMenu = ModelIndex.CompoMenu;
-
+const Product = ModelIndex.Product;
 
 const MenuController = function() {};
 
-MenuController.add = function(name,description){
+MenuController.add = function(name,description,price){
   return Menu.create({
     name: name,
-    description: description
+    description: description,
+    price : price
   });
 };
 
+/*
+MenuController.newMenu = function(name,description,productId , boissonId ){
 
-MenuController.newMenu = function(name,description,produitId , boissonId ){
-
-  if(name === undefined || description === undefined || produitId === undefined || boissonId === undefined ){
+  if(name === undefined || description === undefined || productId === undefined || boissonId === undefined ){
     return;
   }
 
@@ -27,7 +25,7 @@ const menu = this.add(name,description)
 .then((menu)=>{
   return CompoMenu.create({
     boisson_id: boissonId,
-    produit_id: produitId,
+    product_id: productId,
     menu_id : menu.id
   });
 
@@ -37,6 +35,32 @@ const menu = this.add(name,description)
 });
 
 };
+*/
+MenuController.addProduct = function(idMenu,idProduct){
+  return Menu.find({
+    where: {
+      id: idMenu
+    }
+  })
+  .then((menu) => {
+    return Product.find({
+      where:{
+        id: idProduct
+      }
+    })
+    .then((product) => {
+      return menu.addProduct(product);
+    })
+  })
+};
+
+MenuController.addTabProduct = function(idMenu , products){
+  for(prod in products){
+    MenuController.addProduct(idMenu,prod.id);
+  }
+};
+
+
 
 MenuController.getAll = function(){
   return Menu.findAll()
@@ -47,20 +71,7 @@ MenuController.getAll = function(){
 
 
 MenuController.getById = function(id){
-return Menu.find({
-    where: {
-      id: id
-    }
-  }).then(function(menu){
-    if(menu){
-      console.log("la menu a été trouvé");
-      return menu;
-    }else{
-      console.log("la menu n'a pas été trouvé ! ");
-    }
-  }).catch(function(err){
-    console.error(err);
-  })
+return Menu.findById(id);
 }
 
 
