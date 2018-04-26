@@ -1,0 +1,45 @@
+'use strict';
+
+module.exports = function(sequelize , DataTypes){
+
+const User = sequelize.define('User', {
+
+    id : {
+      type: DataTypes.BIGINT,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name :{
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+        allowNull: false
+    },
+    unitPrice : {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    }
+  },
+  {
+    paranoid: false,
+    underscored: true,
+    freezeTableName: true
+});
+    User.associate = _associate;
+  return User;
+};
+
+function _associate(models) {
+  /*models.Product.hasMany(models.Ingredient, {
+    as: 'ingredients'
+  });
+
+  models.Product.belongsToMany(models.Menu, {
+    as: 'products',
+    through: 'MenuProduct',
+    foreignKey: 'product_id'
+  });*/
+
+};
