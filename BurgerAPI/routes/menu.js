@@ -80,6 +80,20 @@ menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
 });
 
 
+menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
+  const idProduct = parseInt(req.params.idProduct);
+  const idMenu = parseInt(req.params.idMenu);
+
+  if(idProduct === undefined || idMenu === undefined ){
+      res.status(400).end();
+    return;
+  }
+
+  MenuController.deleteProduct(idMenu,idProduct);
+  res.status(202).end();
+
+});
+/*
 menuRouter.post('/addTabProduct/:idMenu' , function(req,res){
   const tabProduct = req.body;
   const idMenu = req.params.idMenu;
@@ -88,14 +102,21 @@ menuRouter.post('/addTabProduct/:idMenu' , function(req,res){
     return;
   }
   for(prod in tabProduct){
-
-
-
       res.status(200).json(tabProduct);
   }
 
+});
 
+*/
 
+menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
+  const id = req.params.idMenu;
+  if(id ===undefined ){
+    res.status(401).end();
+    return;
+  }
+  MenuController.deleteMenu(id);
+  res.status(202).end();
 });
 
 module.exports = menuRouter;
