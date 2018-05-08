@@ -63,6 +63,20 @@ UserController.updateUser = function(idUser, newUsername, newPassword, newEmail,
   return user;
 };
 
+UserController.getUserById = function(userId){
+  return User.find({
+    where: {
+      id: userId
+    }
+  })
+  .then((user) => {
+    console.log('Utilisateur trouvé');
+    return user;
+  })
+  .catch((error) => {
+    console.error(err);
+  });
+};
 
 UserController.getAllUser = function(){
   return User.findAll()
