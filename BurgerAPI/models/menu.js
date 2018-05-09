@@ -37,4 +37,6 @@ function _associate(models) {
     through: 'MenuProduct',
     foreignKey: 'menu_id'
   });
+
+  models.Menu.belongsTo(models.Promotion);
 }

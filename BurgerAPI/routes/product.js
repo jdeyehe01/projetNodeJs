@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
 const ProductController = controllers.ProductController;
+const IngredientController = controllers.IngredientController;
 
 const productRouter = express.Router();
 productRouter.use(bodyParser.json());
@@ -9,18 +10,18 @@ productRouter.use(bodyParser.json());
 productRouter.post('/', function(req, res) {
   const name = req.body.name;
   const desc = req.body.description;
-  const price = req.body.price;
+  const price = parseFloat(req.body.price);
 
   if(name === undefined || desc === undefined || price === undefined) {
     res.status(400).end();
     return;
   }
-const product =  ProductController.addProduct(name,desc, price)
+ProductController.addProduct(name,desc, price)
   .then((product) => {
     res.status(201).json(product);
   })
   .catch((err) => {
-    res.status(500).end();
+    res.status(403).end();
   });
 });
 
@@ -32,7 +33,7 @@ productRouter.get('/allProduct', function(req,res){
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(403).end();
   })
 });
 
@@ -46,7 +47,7 @@ productRouter.get('/allIngredientProduct/:id' , function(req,res){
  })
  .catch((err) => {
    console.error(err);
-   res.status(500).end();
+   res.status(403).end();
  })
 });
 
@@ -57,27 +58,37 @@ productRouter.get('/getProductById/:id' , function(req,res){
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(403).end();
   })
 });
 
 
 productRouter.get('/getProductByName/:name' , function(req,res){
-  ProductController.getProductById(req.params.name)
+
+  const name = req.params.name;
+  if(name === undefined ){
+    res.status(403).end();
+    return;
+  }
+  ProductController.getProductById(name)
   .then((product) => {
     res.status(201).json(product);
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).end();
+    res.status(403).end();
   })
 });
 
 productRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
 
-  const idP = req.params.idProduct;
-  const idI = req.params.idIngredient;
+  const idP = parseInt(req.params.idProduct);
+  const idI = parseInt(req.params.idIngredient);
 
+  if(idP === undefined || idI === undefined ){
+    res.status(403).end();
+    return;
+  }
  ProductController.addIngredientInProductById(idP,idI)
  .then(() => {
    const ingredients = ProductController.allIngredientProduct(idP)
@@ -86,7 +97,7 @@ productRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
    })
    .catch((err) => {
      console.error(err);
-     res.status(500).end();
+     res.status(403).end();
    })
  })
  .catch((err) =>{
@@ -101,7 +112,7 @@ productRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req
   const idIngredient = req.params.idIngredient;
 
   if(idProduct === undefined || idIngredient === undefined){
-    res.status(500).end();
+    res.status(403).end();
     return;
   }
 
@@ -118,9 +129,9 @@ productRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req
 });
 
 productRouter.put('/updateIngredient' , function(req,res){
-  const idIngredient = req.body.idIngredient;
-  const idProduct = req.body.idProduct;
-  const quantity = req.body.quantity;
+  const idIngredient = parseInt(req.body.idIngredient);
+  const idProduct = parseInt( req.body.idProduct);
+  const quantity =parseFloat( req.body.quantity);
 
   ProductController.updateQuantity(idProduct,idIngredient,quantity)
   .then(()=>{
@@ -129,6 +140,42 @@ productRouter.put('/updateIngredient' , function(req,res){
   .catch((err) => {
     console.error(err);
   })
+});
+
+//On crée un produit et un ingrédient en même temps
+
+
+productRouter.post('/addProductAndIngredient' , function(req,res){
+
+//Attribut d'un produit
+  const nameP = req.body.nameProduct;
+  const descP = req.body.descriptionProduct;
+  const priceP = parseFloat(req.body.priceProduct);
+
+  //Attribut d'un ingredient
+  const nameI = req.body.nameIngredient;
+  const typeI = req.body.typeIngredient;
+  const quantity = parseFloat(req.body.quantityIgredient);
+
+  if(nameP === undefined || descP === undefined || priceP === undefined|| nameI === undefined|| quantity === undefined || typeI ===undefined){
+    res.status(403).end();
+    return;
+  }
+
+  ProductController.addProduct(nameP,descP, priceP)
+  .then((product) => {
+    IngredientController.addFindOrCreateIngredient(nameI, typeI , quantity , product.id)
+    .then(()=>{
+      res.status(201).json(product)
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
+  })
+  .catch((err)=> {
+    console.error(err);
+  });
+
 });
 
 

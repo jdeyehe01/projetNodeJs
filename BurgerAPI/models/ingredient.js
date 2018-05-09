@@ -16,10 +16,10 @@ module.exports = function(sequelize , DataTypes){
         allowNull: false
       },
       quantity: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.FLOAT,
       },
       unitPrice : {
-        type: DataTypes.BIGINT,
+        type: DataTypes.FLOAT,
         allowNull: true
       }
   }, {

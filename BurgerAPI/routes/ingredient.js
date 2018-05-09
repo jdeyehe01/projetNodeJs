@@ -37,8 +37,14 @@ ingredientRouter.get('/all',function(req,res){
     })
 });
 
-ingredientRouter.get('/:id/id' , function(req,res){
-  IngredientController.getById(req.params.id)
+ingredientRouter.get('/id/:id' , function(req,res){
+
+  const id = req.params.id;
+  if(id === undefined ){
+    res.status(403).end();
+    return;
+  }
+  IngredientController.getById(id)
   .then((ingredient) =>{
     res.status(201).json(ingredient);
   })
@@ -49,8 +55,14 @@ ingredientRouter.get('/:id/id' , function(req,res){
 });
 
 
-ingredientRouter.get('/:name/name' , function(req,res){
-  IngredientController.getByName(req.params.name)
+ingredientRouter.get('/name/:name' , function(req,res){
+
+  const name = req.params.name;
+  if(name === undefined ){
+    res.status(403).end();
+    return;
+  }
+  IngredientController.getByName(name)
   .then((ingredient) => {
     res.status(201).json(ingredient);
   })

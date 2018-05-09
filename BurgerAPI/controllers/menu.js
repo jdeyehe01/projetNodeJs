@@ -13,6 +13,23 @@ MenuController.add = function(name,description,price){
   });
 };
 
+MenuController.findOrCreateMenu = function(name,description,price,idPromotion){
+  return Menu.findOrCreate({
+      where: {
+        name: name
+      },
+      defaults:{
+        name: name,
+        description: description,
+        price: price,
+        promotion_id: idPromotion
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    });
+}
+
 /*
 MenuController.newMenu = function(name,description,productId , boissonId ){
 
@@ -54,6 +71,17 @@ MenuController.addProduct = function(idMenu,idProduct){
   })
 };
 
+MenuController.deleteProduct = function(idMenu,idProduct){
+return Menu.findById(idMenu)
+.then((menu)=>{
+  return Product.findById(idProduct)
+  .then((product) => {
+    return product.destroy();
+  })
+})
+
+};
+
 MenuController.addTabProduct = function(idMenu , products){
   for(prod in products){
     MenuController.addProduct(idMenu,prod.id);
@@ -91,5 +119,17 @@ MenuController.getByName = function(name){
   }).catch(function(err){
     console.error(err);
   })
+}
+
+
+
+MenuController.deleteMenu = function(idMenu){
+
+  Menu.findById(idMenu)
+  .then((menu) =>{
+    menu.destroy();
+    console.log('Menu suprimé ! ');
+  })
+
 }
 module.exports = MenuController;
