@@ -49,7 +49,14 @@ menuRouter.getById('/:id/id' , function(req,res){
 });
 
 */
-menuRouter.get('/:name/name' , function(req,res){
+menuRouter.get('/name/:name' , function(req,res){
+
+  const name = req.params.name;
+  if(name === undefined ){
+    res.status(403).end();
+    return;
+  }
+
   MenuController.getByName(req.params.name)
   .then((menu) => {
     res.status(201).json(menu);
@@ -65,7 +72,7 @@ menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
   const idMenu = parseInt(req.params.idMenu);
 
   if(idProduct === undefined || idMenu === undefined ){
-      res.status(400).end();
+      res.status(403).end();
     return;
   }
 
@@ -85,12 +92,12 @@ menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
   const idMenu = parseInt(req.params.idMenu);
 
   if(idProduct === undefined || idMenu === undefined ){
-      res.status(400).end();
+      res.status(403).end();
     return;
   }
 
   MenuController.deleteProduct(idMenu,idProduct);
-  res.status(202).end();
+  res.status(200).end();
 
 });
 /*
@@ -112,11 +119,11 @@ menuRouter.post('/addTabProduct/:idMenu' , function(req,res){
 menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
   const id = req.params.idMenu;
   if(id ===undefined ){
-    res.status(401).end();
+    res.status(403).end();
     return;
   }
   MenuController.deleteMenu(id);
-  res.status(202).end();
+  res.status(200).end();
 });
 
 module.exports = menuRouter;

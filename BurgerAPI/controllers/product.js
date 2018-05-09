@@ -12,6 +12,26 @@ ProductController.addProduct = function(name,description,unitPrice){
   })
 };
 
+
+
+ProductController.addFindOrCreateProduct = function(name,description,price,idPromotion){
+
+  return Product.findOrCreate({
+    where: {
+      name: name
+    },
+    defaults:{
+      name: name,
+      description: description,
+      unitprice: price,
+      promotion_id: idPromotion
+    }
+  })
+  .catch((err)=>{
+    console.error(err);
+  });
+};
+
 ProductController.deleteIngredientById = function(idProduct,idIngredient){
   return Ingredient.destroy({
     where:{

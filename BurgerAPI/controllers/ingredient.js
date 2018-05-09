@@ -18,6 +18,25 @@ IngredientController.getAll = function(){
     });
 };
 
+IngredientController.addFindOrCreateIngredient = function(name,ingredientType,quantity,idProduct){
+
+  return Ingredient.findOrCreate({
+    where: {
+      name: name,
+      product_id: ''
+    },
+    defaults:{
+      name: name,
+      ingredientType: ingredientType,
+      quantity: quantity,
+      product_id: idProduct
+    }
+  })
+  .catch((err)=>{
+    console.error(err);
+  });
+};
+
 
 IngredientController.getById = function(id){
 return Ingredient.find({

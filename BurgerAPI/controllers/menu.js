@@ -13,6 +13,23 @@ MenuController.add = function(name,description,price){
   });
 };
 
+MenuController.findOrCreateMenu = function(name,description,price,idPromotion){
+  return Menu.findOrCreate({
+      where: {
+        name: name
+      },
+      defaults:{
+        name: name,
+        description: description,
+        price: price,
+        promotion_id: idPromotion
+      }
+    })
+    .catch((err)=>{
+      console.error(err);
+    });
+}
+
 /*
 MenuController.newMenu = function(name,description,productId , boissonId ){
 
