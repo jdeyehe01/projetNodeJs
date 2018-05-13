@@ -10,12 +10,8 @@ userRouter.post('/', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  const rank = req.body.rank;
 
-  if(rank === undefined) {
-    rank = 0;
-  }
-const user =  UserController.addUser(username, password, email, rank)
+const user =  UserController.addUser(username, password, email)
   .then((user) => {
     res.status(201).json(user);
   })
@@ -27,17 +23,6 @@ const user =  UserController.addUser(username, password, email, rank)
 
 userRouter.get('/allUser', function(req,res){
   UserController.getAllUser()
-  .then((users) => {
-    res.status(201).json(users);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  })
-});
-
-userRouter.get('/allAdmin', function(req,res){
-  UserController.getAllAdmin()
   .then((users) => {
     res.status(201).json(users);
   })
@@ -81,9 +66,8 @@ userRouter.put('/updateUser' , function(req,res){
   const username = req.body.username;
   const password = req.body.password;
   const email = req.body.email;
-  const rank = req.body.rank;
 
-  UserController.updateUser(idUser, username, password, email, rank)
+  UserController.updateUser(idUser, username, password, email)
   .then(()=>{
     console.log("L'utilisateur à été mis à jour");
   })

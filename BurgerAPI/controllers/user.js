@@ -3,12 +3,11 @@ const User = ModelIndex.User;
 
 const UserController = function() {};
 
-UserController.addUser = function(username, password, email, rank){
+UserController.addUser = function(username, password, email){
   return User.create({
     username: username,
     password: password,
-    email: email,
-    rank: rank
+    email: email
   })
 };
 
@@ -26,7 +25,7 @@ UserController.deleteUser = function(idUser){
     })
 };
 
-UserController.updateUser = function(idUser, newUsername, newPassword, newEmail, newRank) {
+UserController.updateUser = function(idUser, newUsername, newPassword, newEmail) {
   const user = User.find({
     where:{
       id: idUser
@@ -49,15 +48,10 @@ UserController.updateUser = function(idUser, newUsername, newPassword, newEmail,
       newEmail = user.email;
   }
 
-  if(newRank === undefined) {
-      newRank = user.rank;
-  }
-
   user.updateAttributes({
     username: newUsername,
     password: newPassword,
-    email: newEmail,
-    rank: newRank
+    email: newEmail
   });
 
   return user;
@@ -80,21 +74,6 @@ UserController.getUserById = function(userId){
 
 UserController.getAllUser = function(){
   return User.findAll()
-  .catch((err) => {
-    console.error(err);
-  });
-};
-
-UserController.getAllAdmin = function(){
-  return User.find({
-    where: {
-      rank: 1
-    }
-  })
-  .then((users) => {
-    console.log('Administrateurs trouvés');
-    return users;
-  })
   .catch((err) => {
     console.error(err);
   });
