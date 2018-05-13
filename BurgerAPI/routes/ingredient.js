@@ -8,21 +8,27 @@ ingredientRouter.use(bodyParser.json());
 
 
 ingredientRouter.post('/', function(req, res) {
-  const name = req.body.name;
-  const type = req.body.type;
-  const quantite = parseInt(req.body.quantite);
-  if(name === undefined || type === undefined || quantite === undefined) {
-    res.status(400).end();
-    return;
-  }
-  const ingredient = IngredientController.add(name, type , quantite)
-  .then((ingredient) =>{
-    res.status(201).json(ingredient);
-  })
-  .catch((err) => {
-    res.status(500).end();
-  })
-
+  jwt.verify(req.token, 'secretkey', (err) =>{
+    if(err){
+      res.status(403);
+    }
+    else{
+      const name = req.body.name;
+      const type = req.body.type;
+      const quantite = parseInt(req.body.quantite);
+      if(name === undefined || type === undefined || quantite === undefined) {
+        res.status(400).end();
+        return;
+      }
+      const ingredient = IngredientController.add(name, type , quantite)
+      .then((ingredient) =>{
+        res.status(201).json(ingredient);
+      })
+      .catch((err) => {
+        res.status(500).end();
+      })
+    }
+  });
 });
 
 
