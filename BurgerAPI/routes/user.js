@@ -63,7 +63,8 @@ userRouter.get('/getUserById/:id' , function(req,res){
 });
 
 userRouter.delete('/deleteUser/:idUser' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  
+  jwt.verify(req.headers["authorization"], 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -86,7 +87,7 @@ userRouter.delete('/deleteUser/:idUser' , function(req,res){
 });
 
 userRouter.put('/updateUser' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  jwt.verify(req.headers["authorization"], 'secretkey', (err) =>{
   if(err){
     res.status(403);
   }
@@ -105,7 +106,5 @@ userRouter.put('/updateUser' , function(req,res){
     })
   }});
 });
-
-
 
 module.exports = userRouter;
