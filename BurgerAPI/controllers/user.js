@@ -85,4 +85,19 @@ UserController.getAllUser = function(){
   });
 };
 
+UserController.getAllAdmin = function(){
+  return User.find({
+    where: {
+      rank: 1
+    }
+  })
+  .then((users) => {
+    console.log('Administrateurs trouvés');
+    return users;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+};
+
 module.exports = UserController;

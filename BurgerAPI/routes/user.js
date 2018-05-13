@@ -12,10 +12,6 @@ userRouter.post('/', function(req, res) {
   const email = req.body.email;
   const rank = req.body.rank;
 
-  if(username === undefined || password === undefined || email === undefined) {
-    res.status(400).end();
-    return;
-  }
   if(rank === undefined) {
     rank = 0;
   }
@@ -31,6 +27,17 @@ const user =  UserController.addUser(username, password, email, rank)
 
 userRouter.get('/allUser', function(req,res){
   UserController.getAllUser()
+  .then((users) => {
+    res.status(201).json(users);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  })
+});
+
+userRouter.get('/allAdmin', function(req,res){
+  UserController.getAllAdmin()
   .then((users) => {
     res.status(201).json(users);
   })
