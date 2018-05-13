@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "burgerapi",
   "version": "1.0.0",
@@ -17,3 +18,25 @@
   "devDependencies": {},
   "description": ""
 }
+=======
+{
+  "name": "burgerapi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mysql2": "^1.5.3",
+    "npm": "^5.8.0",
+    "sequelize": "^4.37.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}
+>>>>>>> origin/DEV_Mickael
