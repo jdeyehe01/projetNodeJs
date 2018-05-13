@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
 const IngredientController = controllers.IngredientController;
+const jwt = require('jsonwebtoken');
 
 const ingredientRouter = express.Router();
 ingredientRouter.use(bodyParser.json());
