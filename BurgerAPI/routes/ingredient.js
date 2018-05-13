@@ -2,14 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
 const IngredientController = controllers.IngredientController;
-const jwt = require('jsonwebtoken');
 
 const ingredientRouter = express.Router();
 ingredientRouter.use(bodyParser.json());
 
 
 ingredientRouter.post('/', function(req, res) {
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }

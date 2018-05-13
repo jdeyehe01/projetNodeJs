@@ -28,10 +28,14 @@ userRouter.post('/login', function(req, res){
 
   const user = UserController.login(email, password)
   .then((user) => {
+
+    if(user === null ){
+      res.send("L'email et/ou le mot de passe sont incorrecte ! ").end();
+      return;
+    }
+
     jwt.sign({user}, 'secretkey', {expiresIn: '1h'}, (err, token) =>{
-      res.json({
-        token
-      }); 
+        res.send(token);
     });
   })
   .catch((err) => {
@@ -41,38 +45,58 @@ userRouter.post('/login', function(req, res){
 });
 
 userRouter.get('/allUser', function(req,res){
-  UserController.getAllUser()
-  .then((users) => {
-    res.status(201).json(users);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  })
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
+    if(err){
+      res.status(403).end('Acces refusé');
+      return;
+    }
+    else{
+        UserController.getAllUser()
+        .then((users) => {
+          res.status(201).json(users);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).end();
+        })
+      }
+  });
 });
 
 userRouter.get('/getUserById/:id' , function(req,res){
-  UserController.getUserById(req.params.id)
-  .then((user) => {
-    res.status(201).json(user);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  })
+
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
+    if(err){
+      res.status(403).end();
+      return;
+    }
+    else{
+        UserController.getUserById(req.params.id)
+        .then((user) => {
+          res.status(201).json(user);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.status(500).end();
+        })
+      }
+  });
 });
 
 userRouter.delete('/deleteUser/:idUser' , function(req,res){
-  
-  jwt.verify(req.headers["authorization"], 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end();
+      return;
     }
     else{
       const idUser = req.params.idUser;
 
       if(idUser === undefined){
-        res.status(500).end();
+        res.status(403).end('Acces refusé');
         return;
       }
       UserController.deleteUser(idUser)
@@ -87,9 +111,11 @@ userRouter.delete('/deleteUser/:idUser' , function(req,res){
 });
 
 userRouter.put('/updateUser' , function(req,res){
-  jwt.verify(req.headers["authorization"], 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
   if(err){
-    res.status(403);
+    res.status(403).end('Acces refusé');
+    return;
   }
   else{
     const idUser = req.body.idUser;
@@ -106,5 +132,7 @@ userRouter.put('/updateUser' , function(req,res){
     })
   }});
 });
+
+
 
 module.exports = userRouter;

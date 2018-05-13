@@ -9,7 +9,8 @@ const productRouter = express.Router();
 productRouter.use(bodyParser.json());
 
 productRouter.post('/', function(req, res) {
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -89,7 +90,8 @@ productRouter.get('/getProductByName/:name' , function(req,res){
 });
 
 productRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
-jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -121,7 +123,8 @@ jwt.verify(req.token, 'secretkey', (err) =>{
 
 
 productRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req,res){
-jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
   if(err){
     res.status(403);
   }
@@ -149,7 +152,8 @@ jwt.verify(req.token, 'secretkey', (err) =>{
 });
 
 productRouter.put('/updateIngredient' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -173,7 +177,8 @@ productRouter.put('/updateIngredient' , function(req,res){
 
 
 productRouter.post('/addProductAndIngredient' , function(req,res){
-jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }

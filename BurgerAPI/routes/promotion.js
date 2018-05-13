@@ -12,7 +12,8 @@ promotionRouter.use(bodyParser.json());
 
 
 promotionRouter.post('/addPromotion' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -52,7 +53,8 @@ promotionRouter.get('/getAll' , function(req,res){
 //On ajoute un menu déjà créé (existe dans la bdd) aux promotions
 
 promotionRouter.post('/addExistMenu/:idMenu/:idPromotion' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -80,7 +82,8 @@ promotionRouter.post('/addExistMenu/:idMenu/:idPromotion' , function(req,res){
 //On ajoute un produit déjà créé aux promotions
 
 promotionRouter.post('/addExistMenu/:idProduct/:idPromotion' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -107,7 +110,9 @@ promotionRouter.post('/addExistMenu/:idProduct/:idPromotion' , function(req,res)
 
 //On ajoute un ingredient aux promotions qui existe déjà
 promotionRouter.post('/addExistMenu/:idProduct/:idIngredient' , function(req,res){
-    jwt.verify(req.token, 'secretkey', (err) =>{
+
+    const token = req.headers["authorization"];
+    jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -134,7 +139,8 @@ promotionRouter.post('/addExistMenu/:idProduct/:idIngredient' , function(req,res
 //On crée un menu puis on l'ajoute aux promotions
 
 promotionRouter.post('/createAndAddMenu',function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -171,7 +177,8 @@ promotionRouter.post('/createAndAddMenu',function(req,res){
 
 //On crée un produit puis on l'ajoute aux promotions
 promotionRouter.post('/createAndAddProduct',function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }

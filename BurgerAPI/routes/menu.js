@@ -37,26 +37,14 @@ menuRouter.get('/all',function(req,res){
       res.status(500).end();
     })
 });
-/*
-menuRouter.getById('/:id/id' , function(req,res){
-  MenuController.getById(req.params.id)
-  .then((menu) =>{
-    res.status(201).json(menu);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  })
-});
 
-*/
 menuRouter.get('/name/:name' , function(req,res){
 
   const name = req.params.name;
-  if(name === undefined ){
-    res.status(403).end();
-    return;
-  }
+    if(name === undefined ){
+      res.status(403).end();
+      return;
+    }
 
   MenuController.getByName(req.params.name)
   .then((menu) => {
@@ -69,7 +57,8 @@ menuRouter.get('/name/:name' , function(req,res){
 });
 
 menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -96,7 +85,8 @@ menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
 
 
 menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -114,24 +104,11 @@ menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
     }
   });
 });
-/*
-menuRouter.post('/addTabProduct/:idMenu' , function(req,res){
-  const tabProduct = req.body;
-  const idMenu = req.params.idMenu;
-  if(tabProduct === undefined || idMenu === undefined ){
-    res.status(400).end();
-    return;
-  }
-  for(prod in tabProduct){
-      res.status(200).json(tabProduct);
-  }
 
-});
-
-*/
 
 menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
-  jwt.verify(req.token, 'secretkey', (err) =>{
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -141,8 +118,8 @@ menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
         res.status(403).end();
         return;
       }
-      MenuController.deleteMenu(id);
-      res.status(200).end();
+        MenuController.deleteMenu(id);
+        res.status(200).end();
     }
   });
 });
