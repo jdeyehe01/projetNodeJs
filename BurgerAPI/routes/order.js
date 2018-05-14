@@ -7,8 +7,8 @@ const orderRouter = express.Router();
 orderRouter.use(bodyParser.json());
 
 orderRouter.post('/', function(req, res) {
-  const price = 0;
-  const order =  OrderController.addOrder(price)
+
+  const order =  OrderController.addOrder(0)
     .then((order) => {
       res.status(201).json(order);
     })
@@ -44,27 +44,20 @@ orderRouter.get('/allIngredientProduct/:id' , function(req,res){
 });*/
 
 /*
-orderRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
+orderRouter.post('/addOrderProduct/:idOrder/:idProduct' ,function(req,res){
 
-  const idP = req.params.idProduct;
-  const idI = req.params.idIngredient;
+  const idOrder = req.params.idOrder;
+  const idProduct = req.params.idProduct;
 
- OrderController.addIngredientInProductById(idP,idI)
- .then(() => {
-   const ingredients = ProductController.allIngredientProduct(idP)
-   .then((ingredients) =>{
-     res.status(201).json(ingredients);
-   })
-   .catch((err) => {
-     console.error(err);
-     res.status(500).end();
-   })
- })
- .catch((err) =>{
-   console.error(err);
- });
-});
-*/
+  const order =  OrderController.addProduct(idOrder, idProduct)
+  .then((order) => {
+    res.status(201).json(order);
+  })
+  .catch((err) => {
+    res.status(500).end();
+  });
+});*/
+
 
 orderRouter.delete('/deleteOrder/:idOrder' , function(req,res){
   const token = req.headers["authorization"];

@@ -9,6 +9,12 @@ OrderController.addOrder = function(orderPrice){
   })
 };
 
+OrderController.addProduct = function(idOrder, idProduct){
+  return Order.create({
+    price: orderPrice
+  })
+};
+
 OrderController.deleteOrder = function(idOrder){
   return Order.destroy({
     where:{
