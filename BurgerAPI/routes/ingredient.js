@@ -11,7 +11,8 @@ ingredientRouter.post('/', function(req, res) {
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const name = req.body.name;

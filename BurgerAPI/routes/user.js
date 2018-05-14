@@ -71,7 +71,8 @@ userRouter.delete('/deleteUser/:idUser' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const idUser = req.params.idUser;
@@ -95,7 +96,8 @@ userRouter.put('/updateUser' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
   if(err){
-    res.status(403);
+    res.status(403).end('Accès refusé');
+      return;
   }
   else{
     const idUser = req.body.idUser;
