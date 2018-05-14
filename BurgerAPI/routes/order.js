@@ -1,34 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
-const ProductController = controllers.ProductController;
+const OrderController = controllers.OrderController;
 
-const productRouter = express.Router();
-productRouter.use(bodyParser.json());
+const orderRouter = express.Router();
+orderRouter.use(bodyParser.json());
 
-productRouter.post('/', function(req, res) {
-  const name = req.body.name;
-  const desc = req.body.description;
-  const price = req.body.price;
-
-  if(name === undefined || desc === undefined || price === undefined) {
-    res.status(400).end();
-    return;
-  }
-const product =  ProductController.addProduct(name,desc, price)
-  .then((product) => {
-    res.status(201).json(product);
-  })
-  .catch((err) => {
-    res.status(500).end();
-  });
+orderRouter.post('/', function(req, res) {
+  const price = 0;
+  const order =  OrderController.addOrder(price)
+    .then((order) => {
+      res.status(201).json(order);
+    })
+    .catch((err) => {
+      res.status(500).end();
+    });
 });
 
 
-productRouter.get('/allProduct', function(req,res){
-  ProductController.getAllProduct()
-  .then((products) => {
-    res.status(201).json(products);
+orderRouter.get('/allOrder', function(req,res){
+  OrderController.getAllOrder()
+  .then((orders) => {
+    res.status(201).json(orders);
   })
   .catch((err) => {
     console.error(err);
@@ -36,8 +29,8 @@ productRouter.get('/allProduct', function(req,res){
   })
 });
 
-
-productRouter.get('/allIngredientProduct/:id' , function(req,res){
+/*
+orderRouter.get('/allIngredientProduct/:id' , function(req,res){
   const id = req.params.id;
 
  ProductController.allIngredientProduct(id)
@@ -48,37 +41,15 @@ productRouter.get('/allIngredientProduct/:id' , function(req,res){
    console.error(err);
    res.status(500).end();
  })
-});
+});*/
 
-productRouter.get('/getProductById/:id' , function(req,res){
-  ProductController.getProductById(req.params.id)
-  .then((product) => {
-    res.status(201).json(product);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  })
-});
-
-
-productRouter.get('/getProductByName/:name' , function(req,res){
-  ProductController.getProductById(req.params.name)
-  .then((product) => {
-    res.status(201).json(product);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).end();
-  })
-});
-
-productRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
+/*
+orderRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
 
   const idP = req.params.idProduct;
   const idI = req.params.idIngredient;
 
- ProductController.addIngredientInProductById(idP,idI)
+ OrderController.addIngredientInProductById(idP,idI)
  .then(() => {
    const ingredients = ProductController.allIngredientProduct(idP)
    .then((ingredients) =>{
@@ -93,44 +64,44 @@ productRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
    console.error(err);
  });
 });
+*/
 
+orderRouter.delete('/deleteOrder/:idOrder' , function(req,res){
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
+    if(err){
+      res.status(403).end();
+      return;
+    }
+    else{
+      const idOrder = req.params.idOrder;
 
-productRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req,res){
-
-  const idProduct = req.params.idProduct;
-  const idIngredient = req.params.idIngredient;
-
-  if(idProduct === undefined || idIngredient === undefined){
-    res.status(500).end();
-    return;
-  }
-
-    ProductController.deleteIngredientById(idProduct,idIngredient)
-    .then(() => {
-      const ing = ProductController.allIngredientProduct(idProduct)
-      .then((ing) => {
-        res.status(201).json(ing);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-    })
+      if(idOrder === undefined){
+        res.status(403).end('Acces refusé');
+        return;
+      }
+      OrderController.deleteOrder(idOrder)
+        .then((order) => {
+          res.status(201).json(order);
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+      }
+  });
 });
 
-productRouter.put('/updateIngredient' , function(req,res){
-  const idIngredient = req.body.idIngredient;
-  const idProduct = req.body.idProduct;
-  const quantity = req.body.quantity;
+orderRouter.put('/updateOrder' , function(req,res){
+  const idOrder = req.body.idOrder;
+  const price = req.body.price;
 
-  ProductController.updateQuantity(idProduct,idIngredient,quantity)
+  OrderController.updateOrder(idOrder, price)
   .then(()=>{
-    console.log("Mis à jour de l'ingrédient");
+    console.log("Mise à jour de la commande.");
   })
   .catch((err) => {
     console.error(err);
   })
 });
 
-
-
-module.exports = productRouter;
+module.exports = orderRouter;

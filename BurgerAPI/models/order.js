@@ -9,10 +9,10 @@ const Order = sequelize.define('Order', {
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
-            type: DataTypes.STRING,
+        price: {
+            type: DataTypes.FLOAT,
             allowNull: false
-        },
+        }
     },
     {
         paranoid: false,
@@ -25,8 +25,20 @@ const Order = sequelize.define('Order', {
 };
 
 function _associate(models) {
-  models.Order.hasMany(models.Menu, {
-    as: 'Menus'
-  });
+    models.Order.belongsToMany(models.Menu, {
+        as: 'menus',
+        through: 'OrderMenu',
+        foreignKey: 'order_menu_id'
+    });
+    models.Order.belongsToMany(models.Product, {
+        as: 'products',
+        through: 'OrderProduct',
+        foreignKey: 'order_product_id'
+    });
+    models.Order.belongsToMany(models.Promotion, {
+        as: 'promotions',
+        through: 'OrderPromotion',
+        foreignKey: 'order_promotion_id'
+    });
 
 };

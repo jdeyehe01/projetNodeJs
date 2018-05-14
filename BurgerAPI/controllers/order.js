@@ -3,9 +3,9 @@ const Order = ModelIndex.Order;
 
 const OrderController = function() {};
 
-OrderController.addOrder = function(name){
+OrderController.addOrder = function(orderPrice){
   return Order.create({
-    name: name
+    price: orderPrice
   })
 };
 
@@ -23,7 +23,30 @@ OrderController.deleteOrder = function(idOrder){
     })
 };
 
-OrderController.updateOrder = function(idOrder, newName, newUserId) {
+OrderController.getOrderById = function(orderId){
+  return Order.find({
+    where: {
+      id: orderId
+    }
+  })
+  .then((order) => {
+    console.log('Commande trouvée');
+    return order;
+  })
+  .catch((error) => {
+    console.error(err);
+  });
+};
+
+OrderController.getAllOrder = function(){
+  return Order.findAll()
+  .catch((err) => {
+    console.error(err);
+  });
+};
+
+
+OrderController.updateOrder = function(idOrder, newPrice) {
   const order = Order.find({
     where:{
       id: idOrder
@@ -34,26 +57,15 @@ OrderController.updateOrder = function(idOrder, newName, newUserId) {
     return;
   }
 
-  if(newName === undefined) {
-    newName = order.name;
-  }
-
-  if(newUserId === undefined) {
-      //newUserId = order.use;
+  if(newPrice === undefined) {
+    newPrice = order.price;
   }
 
   order.updateAttributes({
-    name: newName
+    price: newPrice
   });
 
   return order;
-};
-
-OrderController.getAllOrder = function(){
-  return Order.findAll()
-  .catch((err) => {
-    console.error(err);
-  });
 };
 
 module.exports = OrderController;
