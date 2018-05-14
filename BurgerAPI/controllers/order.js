@@ -19,11 +19,13 @@ OrderController.addProduct = function(idOrder, idProduct){
   .then((order) => {
     return Product.findById(idProduct)
     .then((product) => {
+      var newPrice = order.price + product.price;
+      OrderController.updateOrder(order.id,newPrice);
+      console.log('ajout produit');
+
       return product.updateAttributes({
         order_id: idOrder
       });
-      var newPrice = order.price + product.price;
-      OrderController.updateOrder(order.id,newPrice);
     })
   })
 };
@@ -33,11 +35,14 @@ OrderController.addMenu = function(idOrder, idMenu){
   .then((order) => {
     return Menu.findById(idMenu)
     .then((menu) => {
+      var newPrice = order.price + menu.price;
+      OrderController.updateOrder(order.id,newPrice);
+      console.log('ajout menu');
+
       return menu.updateAttributes({
         order_id: idOrder
       });
-      var newPrice = order.price + menu.price;
-      OrderController.updateOrder(order.id,newPrice);
+
     })
   })
 };
@@ -47,12 +52,12 @@ OrderController.addPromotion = function(idOrder, idPromotion){
   .then((order) => {
     return Promotion.findById(idPromotion)
     .then((promotion) => {
+      var newPrice = order.price + promotion.price;
+      OrderController.updateOrder(order.id,newPrice);
+      console.log('ajout promo');
       return promotion.updateAttributes({
       order_id: idOrder
     });
-
-    var newPrice = order.price + promotion.price;
-    OrderController.updateOrder(order.id,newPrice);
     })
   })
 };
@@ -146,25 +151,25 @@ OrderController.getAllOrder = function(){
 
 
 OrderController.updateOrder = function(idOrder, newPrice) {
-  const order = Order.find({
+  return Order.find({
     where:{
       id: idOrder
     }
+  })
+  .then((order)=>{
+    console.log(newPrice);
+    if(newPrice === undefined) {
+      newPrice = order.price;
+    }
+      return order.updateAttributes({
+        price: newPrice
+      });
+
+  })
+  .catch((err)=>{
+      console.error(err);
   });
 
-  if(order === undefined){
-    return;
-  }
-
-  if(newPrice === undefined) {
-    newPrice = order.price;
-  }
-
-  order.updateAttributes({
-    price: newPrice
-  });
-
-  return order;
 };
 
 module.exports = OrderController;

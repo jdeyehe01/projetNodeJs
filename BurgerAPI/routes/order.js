@@ -2,13 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
 const OrderController = controllers.OrderController;
+const jwt = require('jsonwebtoken');
 
 const orderRouter = express.Router();
 orderRouter.use(bodyParser.json());
 
 orderRouter.post('/', function(req, res) {
 
-  const order =  OrderController.addOrder(0)
+  const order = OrderController.addOrder(0)
     .then((order) => {
       res.status(201).json(order);
     })
@@ -45,7 +46,7 @@ orderRouter.post('/addMenu/:idMenu/:idOrder' , function(req,res){
     return;
   }
 
-  OrderController.addProduct(idOrder, idMenu)
+  OrderController.addMenu(idOrder, idMenu)
   .then((menu)=>{
     res.status(201).json(menu);
   })
@@ -64,7 +65,7 @@ orderRouter.post('/addPromotion/:idPromotion/:idOrder' , function(req,res){
     return;
   }
 
-  OrderController.addProduct(idOrder, idPromotion)
+  OrderController.addPromotion(idOrder, idPromotion)
   .then((promotion)=>{
     res.status(201).json(promotion);
   })
@@ -91,7 +92,7 @@ orderRouter.delete('/deleteOrder/:idOrder' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403).end();
+      res.status(403).end('Accès refusé');
       return;
     }
     else{
@@ -117,7 +118,7 @@ orderRouter.delete('/deleteProduct/:idOrder/:idProduct' , function(req,res){
       const idOrder = parseInt(req.params.idOrder);
 
       if(idProduct === undefined || idOrder === undefined ){
-          res.status(403).end();
+          res.status(403).end('Produit supprimé de la commande');
         return;
       }
       OrderController.deleteProduct(idOrder, idProduct);
@@ -133,7 +134,7 @@ orderRouter.delete('/deleteMenu/:idOrder/:idMenu' , function(req,res){
     return;
   }
   OrderController.deleteMenu(idOrder, idMenu);
-  res.status(200).end();
+  res.status(200).end('Menu supprimé de la commande');
 });
 
 orderRouter.delete('/deletePromotion/:idOrder/:idPromotion' , function(req,res){
@@ -145,7 +146,7 @@ orderRouter.delete('/deletePromotion/:idOrder/:idPromotion' , function(req,res){
     return;
   }
   OrderController.deletePromotion(idOrder, idPromotion);
-  res.status(200).end();
+  res.status(200).end('Promotion supprimée de la commande');
 });
 
 orderRouter.put('/updateOrder' , function(req,res){
