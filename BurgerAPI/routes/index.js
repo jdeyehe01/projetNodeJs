@@ -6,6 +6,7 @@ RouteManager.attach = function(app) {
   app.use('/product', require('./product'));
   app.use('/promotion', require('./promotion'));
   app.use('/user', require('./user'));
+  app.use('/order', require('./order'));
 };
 
 module.exports = RouteManager;

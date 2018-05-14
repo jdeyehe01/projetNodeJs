@@ -4,5 +4,6 @@ module.exports = {
   IngredientController : require('./ingredient'),
   ProductController : require('./product'),
   PromotionController : require('./promotion'),
-  UserController : require('./user')
+  UserController : require('./user'),
+  OrderController : require('./order')
 };
