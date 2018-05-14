@@ -38,13 +38,32 @@ menuRouter.get('/all',function(req,res){
     })
 });
 
+menuRouter.get('/allCompoMenu/:idMenu' , function(req,res){
+
+  const idMenu = req.params.idMenu;
+
+  if(idMenu === undefined) {
+    res.status(400).end();
+    return;
+  }
+
+  MenuController.getMenuCompo(idMenu)
+  .then((products) =>{
+    res.status(200).json(products);
+  })
+  .catch((err)=>{
+    console.error(err);
+  });
+
+});
+
 menuRouter.get('/name/:name' , function(req,res){
 
   const name = req.params.name;
-    if(name === undefined ){
-      res.status(403).end();
-      return;
-    }
+  if(name === undefined ){
+    res.status(403).end();
+    return;
+  }
 
   MenuController.getByName(req.params.name)
   .then((menu) => {
@@ -57,8 +76,7 @@ menuRouter.get('/name/:name' , function(req,res){
 });
 
 menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
-  const token = req.headers["authorization"];
-  jwt.verify(token, 'secretkey', (err) =>{
+  jwt.verify(req.token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -85,8 +103,7 @@ menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
 
 
 menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
-  const token = req.headers["authorization"];
-  jwt.verify(token, 'secretkey', (err) =>{
+  jwt.verify(req.token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -107,8 +124,7 @@ menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
 
 
 menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
-  const token = req.headers["authorization"];
-  jwt.verify(token, 'secretkey', (err) =>{
+  jwt.verify(req.token, 'secretkey', (err) =>{
     if(err){
       res.status(403);
     }
@@ -118,8 +134,8 @@ menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
         res.status(403).end();
         return;
       }
-        MenuController.deleteMenu(id);
-        res.status(200).end();
+      MenuController.deleteMenu(id);
+      res.status(200).end();
     }
   });
 });
