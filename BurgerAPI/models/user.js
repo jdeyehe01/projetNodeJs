@@ -28,19 +28,5 @@ const User = sequelize.define('User', {
         freezeTableName: true
     });
 
-    User.associate = _associate;
     return User;
-};
-
-function _associate(models) {
-  /*models.Product.hasMany(models.Ingredient, {
-    as: 'ingredients'
-  });
-
-  models.Product.belongsToMany(models.Menu, {
-    as: 'products',
-    through: 'MenuProduct',
-    foreignKey: 'product_id'
-  });*/
-
 };
