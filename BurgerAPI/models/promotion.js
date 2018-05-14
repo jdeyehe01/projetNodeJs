@@ -34,11 +34,7 @@ const Promotion = sequelize.define('Promotion', {
 
 function _associate(models) {
 
-  models.Promotion.belongsToMany(models.Order, {
-    as: 'orders',
-    through: 'OrderCompo',
-    foreignKey: 'promotion_id'
-  });
+  models.Promotion.belongsTo(models.Order);
 
   models.Promotion.hasMany(models.Menu, {
     as: 'menus'

@@ -25,20 +25,17 @@ const Order = sequelize.define('Order', {
 };
 
 function _associate(models) {
-    models.Order.belongsToMany(models.Menu, {
-        as: 'menus',
-        through: 'OrderCompo',
-        foreignKey: 'menu_id'
-    });
-    models.Order.belongsToMany(models.Product, {
-        as: 'products',
-        through: 'OrderCompo',
-        foreignKey: 'product_id'
-    });
-    models.Order.belongsToMany(models.Promotion, {
-        as: 'promotions',
-        through: 'OrderCompo',
-        foreignKey: 'promotion_id'
-    });
+
+  models.Order.hasMany(models.Menu, {
+    as: 'OrderMenus'
+  });
+
+  models.Order.hasMany(models.Product, {
+    as: 'OrderProducts'
+  });
+
+  models.Order.hasMany(models.Promotion, {
+    as: 'OrderPromotions'
+  });
 
 };

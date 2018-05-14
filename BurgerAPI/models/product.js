@@ -37,7 +37,9 @@ function _associate(models) {
     as: 'ingredients'
   });
 
-  models.Menu.belongsTo(models.Promotion);
+  models.Product.belongsTo(models.Promotion);
+  models.Product.belongsTo(models.Order);
+
 
 
   models.Product.belongsToMany(models.Menu, {
@@ -46,10 +48,5 @@ function _associate(models) {
     foreignKey: 'product_id'
   });
 
-  models.Product.belongsToMany(models.Order, {
-    as: 'orders',
-    through: 'OrderCompo',
-    foreignKey: 'product_id'
-  });
 
 }

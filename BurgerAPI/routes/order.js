@@ -86,35 +86,6 @@ orderRouter.get('/allOrder', function(req,res){
   })
 });
 
-/*
-orderRouter.get('/allIngredientProduct/:id' , function(req,res){
-  const id = req.params.id;
-
- ProductController.allIngredientProduct(id)
- .then((ingredients) =>{
-   res.status(201).json(ingredients);
- })
- .catch((err) => {
-   console.error(err);
-   res.status(500).end();
- })
-});*/
-
-/*
-orderRouter.post('/addOrderProduct/:idOrder/:idProduct' ,function(req,res){
-
-  const idOrder = req.params.idOrder;
-  const idProduct = req.params.idProduct;
-
-  const order =  OrderController.addProduct(idOrder, idProduct)
-  .then((order) => {
-    res.status(201).json(order);
-  })
-  .catch((err) => {
-    res.status(500).end();
-  });
-});*/
-
 
 orderRouter.delete('/deleteOrder/:idOrder' , function(req,res){
   const token = req.headers["authorization"];

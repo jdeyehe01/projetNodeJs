@@ -19,9 +19,11 @@ OrderController.addProduct = function(idOrder, idProduct){
   .then((order) => {
     return Product.findById(idProduct)
     .then((product) => {
-      //const newPrice = order.price + product.price;
-      //order.updateOrder(idOrder, newPrice);
-      return order.addProduct(product);
+      return product.updateAttributes({
+        order_id: idOrder
+      });
+      var newPrice = order.price + product.price;
+      OrderController.updateOrder(order.id,newPrice);
     })
   })
 };
@@ -31,7 +33,11 @@ OrderController.addMenu = function(idOrder, idMenu){
   .then((order) => {
     return Menu.findById(idMenu)
     .then((menu) => {
-      return order.addMenu(menu);
+      return menu.updateAttributes({
+        order_id: idOrder
+      });
+      var newPrice = order.price + menu.price;
+      OrderController.updateOrder(order.id,newPrice);
     })
   })
 };
@@ -41,7 +47,12 @@ OrderController.addPromotion = function(idOrder, idPromotion){
   .then((order) => {
     return Promotion.findById(idPromotion)
     .then((promotion) => {
-      return order.addMenu(promotion);
+      return promotion.updateAttributes({
+      order_id: idOrder
+    });
+
+    var newPrice = order.price + promotion.price;
+    OrderController.updateOrder(order.id,newPrice);
     })
   })
 };
@@ -63,8 +74,15 @@ OrderController.deleteOrder = function(idOrder){
 OrderController.deleteProduct = function(idOrder, idProduct){
   return Order.findById(idOrder)
   .then((order)=>{
-    return Product.findById(idProduct)
+    return Product.find({
+      where:{
+        id: idProduct,
+        order_id: idOrder
+      }
+    })
     .then((product) => {
+      var newPrice = order.price - product.price;
+      OrderController.updateOrder(order.id,newPrice);
       return product.destroy();
     })
   })
@@ -73,8 +91,15 @@ OrderController.deleteProduct = function(idOrder, idProduct){
 OrderController.deleteMenu = function(idOrder, idMenu){
   return Order.findById(idOrder)
   .then((order)=>{
-    return Menu.findById(idMenu)
+    return Menu.find({
+      where: {
+        id: idMenu,
+        order_id: idOrder
+      }
+    })
     .then((menu) => {
+      var newPrice = order.price - menu.price;
+      OrderController.updateOrder(order.id,newPrice);
       return menu.destroy();
     })
   })
@@ -83,8 +108,15 @@ OrderController.deleteMenu = function(idOrder, idMenu){
 OrderController.deletePromotion = function(idOrder, idPromotion){
   return Order.findById(idOrder)
   .then((order)=>{
-    return Promotion.findById(idPromotion)
+    return Promotion.find({
+      where: {
+        id: idPromotion,
+        order_id: idOrder
+      }
+    })
     .then((promotion) => {
+      var newPrice = order.price - promotion.price;
+      OrderController.updateOrder(order.id,newPrice);
       return promotion.destroy();
     })
   })

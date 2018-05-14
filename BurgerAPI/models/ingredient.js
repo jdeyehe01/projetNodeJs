@@ -1,7 +1,7 @@
 module.exports = function(sequelize , DataTypes){
-  
+
     const Ingredient = sequelize.define('Ingredient' , {
-  
+
         id: {
           type: DataTypes.BIGINT,
           primaryKey: true,
@@ -17,10 +17,6 @@ module.exports = function(sequelize , DataTypes){
         },
         quantity: {
           type: DataTypes.FLOAT,
-        },
-        unitPrice : {
-          type: DataTypes.FLOAT,
-          allowNull: true
         }
     }, {
         paranoid: false,
@@ -30,7 +26,7 @@ module.exports = function(sequelize , DataTypes){
     Ingredient.associate = _association;
     return Ingredient;
   };
-  
+
   function _association(models){
     models.Ingredient.belongsTo(models.Product);
   };
