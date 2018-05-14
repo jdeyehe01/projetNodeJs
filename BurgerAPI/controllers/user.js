@@ -79,4 +79,22 @@ UserController.getAllUser = function(){
   });
 };
 
+
+UserController.login = function(email, password){
+  return User.find({
+    where : {
+      email : email,
+      password : password
+    }
+  })
+  .then((user)=>{
+    if(user){
+      return user;
+    }
+    else{
+      return null;
+    }
+  })
+};
+
 module.exports = UserController;
