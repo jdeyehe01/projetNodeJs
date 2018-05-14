@@ -30,29 +30,7 @@ MenuController.findOrCreateMenu = function(name,description,price,idPromotion){
     });
 }
 
-/*
-MenuController.newMenu = function(name,description,productId , boissonId ){
 
-  if(name === undefined || description === undefined || productId === undefined || boissonId === undefined ){
-    return;
-  }
-
-
-const menu = this.add(name,description)
-.then((menu)=>{
-  return CompoMenu.create({
-    boisson_id: boissonId,
-    product_id: productId,
-    menu_id : menu.id
-  });
-
-})
-.catch((err) =>{
-  console.error(err);
-});
-
-};
-*/
 MenuController.addProduct = function(idMenu,idProduct){
   return Menu.find({
     where: {
@@ -82,19 +60,19 @@ return Menu.findById(idMenu)
 
 };
 
-MenuController.addTabProduct = function(idMenu , products){
-  for(prod in products){
-    MenuController.addProduct(idMenu,prod.id);
-  }
-};
 
-
-
-MenuController.getAll = function(){
+MenuController.getAllMenu = function(){
   return Menu.findAll()
-    .catch(function(err){
+    .catch((err)=>{
       console.error(err);
     });
+};
+
+MenuController.getMenuCompo = function(idMenu){
+  return Menu.findById(idMenu)
+  .then((menu) =>{
+    return menu.getProducts();
+  })
 };
 
 
