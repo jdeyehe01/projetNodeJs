@@ -38,5 +38,11 @@ function _associate(models) {
     foreignKey: 'menu_id'
   });
 
+  models.Menu.belongsToMany(models.Order, {
+    as: 'orders',
+    through: 'OrderCompo',
+    foreignKey: 'menu_id'
+  });
+
   models.Menu.belongsTo(models.Promotion);
 }

@@ -46,4 +46,10 @@ function _associate(models) {
     foreignKey: 'product_id'
   });
 
+  models.Product.belongsToMany(models.Order, {
+    as: 'orders',
+    through: 'OrderCompo',
+    foreignKey: 'product_id'
+  });
+
 }

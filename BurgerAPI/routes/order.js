@@ -17,6 +17,63 @@ orderRouter.post('/', function(req, res) {
     });
 });
 
+orderRouter.post('/addProduct/:idProduct/:idOrder' , function(req,res){
+  const idProduct = parseInt(req.params.idProduct);
+  const idOrder = parseInt(req.params.idOrder);
+
+  if(idProduct === undefined || idOrder === undefined ){
+      res.status(403).end();
+    return;
+  }
+
+  OrderController.addProduct(idOrder, idProduct)
+  .then((product)=>{
+    res.status(201).json(product);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  })
+});
+
+orderRouter.post('/addMenu/:idMenu/:idOrder' , function(req,res){
+  const idMenu = parseInt(req.params.idMenu);
+  const idOrder = parseInt(req.params.idOrder);
+
+  if(idMenu === undefined || idOrder === undefined ){
+      res.status(403).end();
+    return;
+  }
+
+  OrderController.addProduct(idOrder, idMenu)
+  .then((menu)=>{
+    res.status(201).json(menu);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  })
+});
+
+orderRouter.post('/addPromotion/:idPromotion/:idOrder' , function(req,res){
+  const idPromotion = parseInt(req.params.idPromotion);
+  const idOrder = parseInt(req.params.idOrder);
+
+  if(idPromotion === undefined || idOrder === undefined ){
+      res.status(403).end();
+    return;
+  }
+
+  OrderController.addProduct(idOrder, idPromotion)
+  .then((promotion)=>{
+    res.status(201).json(promotion);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).end();
+  })
+});
+
 
 orderRouter.get('/allOrder', function(req,res){
   OrderController.getAllOrder()
@@ -82,6 +139,42 @@ orderRouter.delete('/deleteOrder/:idOrder' , function(req,res){
         })
       }
   });
+});
+
+orderRouter.delete('/deleteProduct/:idOrder/:idProduct' , function(req,res){
+      const idProduct = parseInt(req.params.idProduct);
+      const idOrder = parseInt(req.params.idOrder);
+
+      if(idProduct === undefined || idOrder === undefined ){
+          res.status(403).end();
+        return;
+      }
+      OrderController.deleteProduct(idOrder, idProduct);
+      res.status(200).end();
+});
+
+orderRouter.delete('/deleteMenu/:idOrder/:idMenu' , function(req,res){
+  const idMenu = parseInt(req.params.idMenu);
+  const idOrder = parseInt(req.params.idOrder);
+
+  if(idMenu === undefined || idOrder === undefined ){
+      res.status(403).end();
+    return;
+  }
+  OrderController.deleteMenu(idOrder, idMenu);
+  res.status(200).end();
+});
+
+orderRouter.delete('/deletePromotion/:idOrder/:idPromotion' , function(req,res){
+  const idPromotion = parseInt(req.params.idPromotion);
+  const idOrder = parseInt(req.params.idOrder);
+
+  if(idPromotion === undefined || idOrder === undefined ){
+      res.status(403).end();
+    return;
+  }
+  OrderController.deletePromotion(idOrder, idPromotion);
+  res.status(200).end();
 });
 
 orderRouter.put('/updateOrder' , function(req,res){
