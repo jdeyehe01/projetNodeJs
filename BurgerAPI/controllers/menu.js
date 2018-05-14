@@ -13,6 +13,19 @@ MenuController.add = function(name,description,price){
   });
 };
 
+
+MenuController.getMenuById = function(idMenu){
+  return Menu.findById(idMenu)
+  .then((menu) => {
+    console.log('menu trouvé');
+    return menu;
+  })
+  .catch((error) => {
+    console.error(err);
+  });
+};
+
+
 MenuController.findOrCreateMenu = function(name,description,price,idPromotion){
   return Menu.findOrCreate({
       where: {
