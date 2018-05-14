@@ -12,7 +12,37 @@ ProductController.addProduct = function(name,description,unitPrice){
   })
 };
 
+ProductController.updateProduct = function(idProduct, newProductName, newDescription, NewPrice) {
+  const product = product.find({
+    where:{
+      id: idProduct
+    }
+  });
 
+  if(product === undefined){
+    return;
+  }
+
+  if(newProductName === undefined) {
+    newProductName = product.name;
+  }
+
+  if(newDescription === undefined) {
+      newDescription = product.description;
+  }
+
+  if(NewPrice === undefined) {
+      NewPrice = product.unitPrice;
+  }
+
+  product.updateAttributes({
+    name: newProductName,
+    description: newDescription,
+    unitPrice: NewPrice
+  });
+
+  return product;
+};
 
 ProductController.addFindOrCreateProduct = function(name,description,price,idPromotion){
 

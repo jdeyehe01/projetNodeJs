@@ -34,6 +34,27 @@ productRouter.post('/', function(req, res) {
   });
 });
 
+productRouter.put('/updateProduct' , function(req,res){
+  const token = req.headers["authorization"];
+  jwt.verify(token, 'secretkey', (err) =>{
+  if(err){
+    res.status(403);
+  }
+  else{
+    const idProduct = req.body.idProduct;
+    const name = req.body.name;
+    const description = req.body.description;
+    const unitPrice = req.body.unitPrice;
+
+    UserController.updateUser(idProduct, name, description, unitPrice)
+    .then(()=>{
+      console.log("Le produit à été mis à jour");
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+  }});
+});
 
 productRouter.get('/allProduct', function(req,res){
   ProductController.getAllProduct()
