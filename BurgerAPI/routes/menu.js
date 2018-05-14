@@ -94,9 +94,9 @@ menuRouter.get('/name/:name' , function(req,res){
 menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
   jwt.verify(req.token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
-    }
-    else{
+      res.status(403).end('Accès refusé');
+      return;
+        }else{
       const idProduct = parseInt(req.params.idProduct);
       const idMenu = parseInt(req.params.idMenu);
 
@@ -121,7 +121,8 @@ menuRouter.post('/addProduct/:idProduct/:idMenu' , function(req,res){
 menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
   jwt.verify(req.token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const idProduct = parseInt(req.params.idProduct);
@@ -142,7 +143,8 @@ menuRouter.delete('/deleteProduit/:idMenu/:idProduct' , function(req,res){
 menuRouter.delete('/deleteMenu/:idMenu' , function(req,res){
   jwt.verify(req.token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const id = req.params.idMenu;

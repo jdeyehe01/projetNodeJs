@@ -15,7 +15,8 @@ promotionRouter.post('/addPromotion' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
         const name = req.body.name;
@@ -56,7 +57,8 @@ promotionRouter.post('/addExistMenu/:idMenu/:idPromotion' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const idMenu = req.params.idMenu;
@@ -85,7 +87,8 @@ promotionRouter.post('/addExistMenu/:idProduct/:idPromotion' , function(req,res)
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const idProduct = req.params.idProduct;
@@ -114,7 +117,8 @@ promotionRouter.post('/addExistMenu/:idProduct/:idIngredient' , function(req,res
     const token = req.headers["authorization"];
     jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
         const idIngredient = req.params.idIngredient;
@@ -142,7 +146,8 @@ promotionRouter.post('/createAndAddMenu',function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const name = req.body.name;
@@ -180,7 +185,8 @@ promotionRouter.post('/createAndAddProduct',function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const name = req.body.name;

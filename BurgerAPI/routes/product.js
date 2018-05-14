@@ -12,7 +12,8 @@ productRouter.post('/', function(req, res) {
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const name = req.body.name;
@@ -34,11 +35,12 @@ productRouter.post('/', function(req, res) {
   });
 });
 
-productRouter.put('/updateProduct' , function(req,res){
+productRouter.post('/updateProduct' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
   if(err){
-    res.status(403);
+    res.status(403).end('Accès refusé');
+    return;
   }
   else{
     const idProduct = req.body.idProduct;
@@ -114,7 +116,8 @@ productRouter.post('/addIngredient/:idProduct/:idIngredient' ,function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const idP = parseInt(req.params.idProduct);
@@ -147,7 +150,8 @@ productRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
   if(err){
-    res.status(403);
+    res.status(403).end('Accès refusé');
+    return;
   }
   else{
       const idProduct = req.params.idProduct;
@@ -172,11 +176,12 @@ productRouter.delete('/deleteIngredient/:idProduct/:idIngredient' , function(req
   });
 });
 
-productRouter.put('/updateIngredient' , function(req,res){
+productRouter.post('/updateIngredient' , function(req,res){
   const token = req.headers["authorization"];
   jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       const idIngredient = parseInt(req.body.idIngredient);
@@ -201,7 +206,8 @@ productRouter.post('/addProductAndIngredient' , function(req,res){
   const token = req.headers["authorization"];
 jwt.verify(token, 'secretkey', (err) =>{
     if(err){
-      res.status(403);
+      res.status(403).end('Accès refusé');
+      return;
     }
     else{
       //Attribut d'un produit
